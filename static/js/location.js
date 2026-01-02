@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     loadLocationAndBirds();
     setupModalCloseOnClickOutside('addBirdModal');
-    setupEBirdSearch();
 });
 
 /**
@@ -175,12 +174,13 @@ async function loadLocationAndBirds() {
                         <a href="${escapeHtml(bird.ebird_url)}" target="_blank" class="btn btn-primary btn-small" style="flex: 1; text-align: center;">
                             eBird 보기
                         </a>
-                        <button class="btn btn-secondary btn-small" onclick="editBird(${bird.id})">
-                            수정
-                        </button>
-                        <button class="btn btn-danger btn-small" onclick="deleteBird(${bird.id})">
-                            삭제
-                        </button>
+                        <div style="position: relative;">
+                            <button class="btn-menu" onclick="toggleCardMenu(${bird.id}, event)">⋮</button>
+                            <div id="menu-${bird.id}" class="card-menu hidden">
+                                <button class="card-menu-item" onclick="editBird(${bird.id})">수정</button>
+                                <button class="card-menu-item delete" onclick="deleteBird(${bird.id})">삭제</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -289,3 +289,27 @@ async function deleteBird(birdId) {
         showAlert(`새 삭제 실패: ${error.message}`, 'error');
     }
 }
+
+/**
+ * 카드 메뉴 토글
+ */
+function toggleCardMenu(birdId, event) {
+    event.stopPropagation();
+    const menu = document.getElementById(`menu-${birdId}`);
+    const isOpen = !menu.classList.contains('hidden');
+    
+    // 다른 메뉴 닫기
+    document.querySelectorAll('.card-menu').forEach(m => m.classList.add('hidden'));
+    
+    // 현재 메뉴 토글
+    if (isOpen) {
+        menu.classList.add('hidden');
+    } else {
+        menu.classList.remove('hidden');
+    }
+}
+
+// 메뉴 외부 클릭 시 닫기
+document.addEventListener('click', () => {
+    document.querySelectorAll('.card-menu').forEach(m => m.classList.add('hidden'));
+});
