@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>탐조 - 새를 찾는 즐거움</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🐦 탐조</h1>
+            <p>지역별 볼 수 있는 새들을 기록하고, eBird로 자세히 알아보세요!</p>
+            <nav>
+                <button id="addLocationBtn" class="btn btn-primary">+ 지역 추가</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div id="locationsContainer" class="cards-grid">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 지역 추가 모달 -->
+    <div id="addLocationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>새 지역 추가</h2>
+                <button class="modal-close">✕</button>
+            </div>
+            <form id="addLocationForm">
+                <div class="form-group">
+                    <label for="locationName">지역명 *</label>
+                    <input type="text" id="locationName" name="name" placeholder="예: 여의도공원" required>
+                </div>
+                <div class="form-group">
+                    <label for="locationDescription">설명</label>
+                    <textarea id="locationDescription" name="description" placeholder="이 지역에 대한 설명을 입력하세요"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addLocationModal')">취소</button>
+                    <button type="submit" class="btn btn-primary">추가</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer style="background: #2c3e50; color: white; text-align: center; padding: 1rem; margin-top: 3rem;">
+        <p>&copy; 2026 탐조 앱. 모든 권리 보유.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ui-helpers.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>
